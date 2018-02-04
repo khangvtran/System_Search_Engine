@@ -4,9 +4,11 @@
 # CIS 41B
 
 import tkinter as tk
+from tkinter import filedialog
 import os
 import os.path
 import platform
+
 
 class FindWin(tk.Tk):
     '''
@@ -24,15 +26,21 @@ class FindWin(tk.Tk):
         # set resizable
         self.resizable(True, True)
         
+        
         # add label: "Current Folder: "
+        '''
         currentFolderLabel = tk.Label(self, text = "  Current Folder: ")
         currentFolderLabel.grid(row = 0, column = 0, sticky = "w")
+        '''
         
         # add Label that shows current start directory. The default is Home directory of the system
-        startDir = tk.StringVar()
-        startDir.set(os.path.expanduser("~"))        
-        currentStartDirLabel = tk.Label(self, textvariable= startDir)
-        currentStartDirLabel.grid(row = 0, column = 1, sticky = 'w')
+        self.startDir = tk.StringVar()                                   # must use tk.StringVar()
+        self.startDir.set(os.path.expanduser("~"))                       # must set() to assign string. Do not use "="
+        self.currentFolderStringVar = tk.StringVar()
+        self.currentFolderStringVar.set("  Current Folder: " + str(self.startDir.get()))
+        
+        currentStartDirLabel = tk.Label(self, textvariable = self.currentFolderStringVar)
+        currentStartDirLabel.grid(row = 0, column = 0, sticky = 'w')
         
         #add Button: "Change Folder". Call back selectDir() 
         changeFolderButton = tk.Button(self, text = "Change Folder", command = self.selectDir)
@@ -60,11 +68,28 @@ class FindWin(tk.Tk):
         # add empty buffer
         tk.Label(self).grid(row = 5, column = 0, sticky = 'w')
         
+        self.update()
+        
+        
         
     def selectDir(self):
+        '''
+        This function use tk.filedialog.askdirectory(initialdir) to set new starDir 
+        '''
         print("Call selectDir")
+        newDir = tk.filedialog.askdirectory(initialdir = self.startDir)    # notice: newDir can be an empty string if user cancel the search
+        if newDir != "":                                                   # only update the new directory if the user confirm the search
+            self.startDir.set(newDir)
+        self.currentFolderStringVar.set("  Current Folder: " + str(self.startDir.get()))
+        
+        self.search()
+       
+       
+       
+        
     def search(self):
-        pass
+        print("call search")
+        
 
 
 
