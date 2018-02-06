@@ -28,11 +28,11 @@ class FindWin(tk.Tk):
         self.resizable(True, True)
         
         # add Current Folder label
-        currentFolderLabel = tk.Label(self, text = "  Current Folder:  ")
+        currentFolderLabel = tk.Label(self, text = "  Current Folder:")
         currentFolderLabel.grid(row = 0, column = 0, sticky  = 'w')
         
         # add Label that shows current start directory. The default is Home directory of the system
-        self.startDir = tk.StringVar()                                   # must use tk.StringVar()
+        self.startDir = tk.StringVar()                                     # must use tk.StringVar()
         # self.startDir.set(os.path.expanduser("~"))                       # must set() to assign string. Do not use "="
 
         #########################################
@@ -123,7 +123,9 @@ class FindWin(tk.Tk):
                 tk.messagebox.showwarning("High Number of results", "Found more than 1000 results. Ommited")
             else:
                 [self.listBox.insert(tk.END, result) for result in self.fileSearchObject.searchResult]
-        
+                self.numFileFoundLabel = tk.Label(self, text = "Found " + str(searchResultSize) + " files")
+                self.numFileFoundLabel.grid(row = 5, column = 0)
+                
         except Exception as e:
             tk.messagebox.showerror("Regex Error", e)
 
