@@ -27,20 +27,22 @@ class FindWin(tk.Tk):
         # set resizable
         self.resizable(True, True)
         
+        # add Current Folder label
+        currentFolderLabel = tk.Label(self, text = "  Current Folder:  ")
+        currentFolderLabel.grid(row = 0, column = 0, sticky  = 'w')
         
         # add Label that shows current start directory. The default is Home directory of the system
         self.startDir = tk.StringVar()                                   # must use tk.StringVar()
         # self.startDir.set(os.path.expanduser("~"))                       # must set() to assign string. Do not use "="
-       
+
         #########################################
         self.startDir.set(os.path.expanduser("/Users/KVTran/Documents/CIS41B/Module4_System/System_Search_Engine")) 
         #######################################
-       
-       
+    
         self.currentFolderStringVar = tk.StringVar()
-        self.currentFolderStringVar.set("  Current Folder:   " + str(self.startDir.get()))
+        self.currentFolderStringVar.set(self.startDir.get())
         currentStartDirLabel = tk.Label(self, textvariable = self.currentFolderStringVar)
-        currentStartDirLabel.grid(row = 0, column = 0, sticky = 'w')
+        currentStartDirLabel.grid(row = 0, column = 1, sticky = 'w')
         
         
         #add Button: "Change Folder". Call back selectDir() 
@@ -98,7 +100,7 @@ class FindWin(tk.Tk):
         newDir = tk.filedialog.askdirectory(initialdir = self.startDir)    # notice: newDir can be an empty string if user cancel the search
         if newDir != "":                                                   # only update the new directory if the user confirm the search
             self.startDir.set(newDir)
-        self.currentFolderStringVar.set("  Current Folder:   " + str(self.startDir.get()))
+        self.currentFolderStringVar.set(self.startDir.get())
         
         # create a new fileSearch object with new path
         self.fileSearchObject = FileSearch(self.startDir.get())
