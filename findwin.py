@@ -31,11 +31,11 @@ class FindWin(tk.Tk):
         currentFolderLabel = tk.Label(self, text = "  Current Folder:")
         currentFolderLabel.grid(row = 0, column = 0, sticky  = 'w')
         
+        #########################################
         # add Label that shows current start directory. The default is Home directory of the system
         self.startDir = tk.StringVar()                                     # must use tk.StringVar()
-        # self.startDir.set(os.path.expanduser("~"))                       # must set() to assign string. Do not use "="
+        #self.startDir.set(os.path.expanduser("~"))                       # must set() to assign string. Do not use "="
 
-        #########################################
         self.startDir.set(os.path.expanduser("/Users/KVTran/Documents/CIS41B/Module4_System/System_Search_Engine")) 
         #######################################
     
@@ -136,7 +136,7 @@ class FindWin(tk.Tk):
 #############################################################
 ######################### Test Area ######################### 
 #############################################################
-
+'''
 def main():
     app = FindWin()
     
@@ -147,4 +147,4 @@ def main():
     app.mainloop()
 
 main()
-
+'''
