@@ -4,38 +4,33 @@
 # CIS 41B
 
 import os 
+import os.path
 import re
 
 class FileSearch():
     def __init__(self, startDir):   
-        absPathDict = { }
+        self.absPathDict = { }
         walkResult = os.walk(startDir)                    # recursively walk down all path of the directory
         for (path, dirList, fileList) in walkResult:      # store all files (including directory) into a dictionary using filenames as keys
-            [absPathDict.update({d : os.path.join(path, d)}) for d in dirList]   
-            [absPathDict.update({f : os.path.join(path, f)}) for f in fileList]   
-        print(absPathDict)
+            [self.absPathDict.update({d : os.path.join(path, d)}) for d in dirList]   
+            [self.absPathDict.update({f : os.path.join(path, f)}) for f in fileList]   
+        #print(self.absPathDict)
                 
-    def searchName(self, regexFilter):
-        pass
+    def searchName(self, regex):
+        self.searchResult = [self.absPathDict[fileName] for fileName in self.absPathDict if regex.search(self.absPathDict[fileName])]
+        #print(self.searchResult)
     
     
 #############################################################
 ######################### Test Area ######################### 
 ############################################################# 
   
-'''    
-walkResult = os.walk(testDir)
-for (path, dirList, fileList) in walkResult:
-    for d in dirList:
-        print("d")
-        print(d)
-        print(os.path.join(path, d))
-    for f in fileList :
-        print("f")
-        print()
-        print(os.path.join(path,f))        
-'''     
-testDir = '/Users/KVTran/Documents/CIS41B/Module4_System'
+'''      
+testDir = '/Users/KVTran/Documents/CIS41B/Module4_System/System_Search_Engine'
 testDir2 = '/Applications'
 testDir3 = '/Users/KVTran/Documents/ECON'
-fileSearchObject = FileSearch(testDir3)
+testString = 'lab4'
+fileSearchObject = FileSearch(testDir)
+fileSearchObject.searchName(re.compile(testString))
+
+'''
